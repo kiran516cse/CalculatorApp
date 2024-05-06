@@ -1,4 +1,4 @@
-using CalculatorApp.BAL;
+using CalculatorApp.Interfaces;
 
 namespace CalculatorApp
 {
@@ -6,7 +6,8 @@ namespace CalculatorApp
     {
         #region --- Properties ---
 
-        CalculatorBAL calculatorBAL;
+        //  Define the calculator variable
+        private readonly ICalculator calculator;
 
         //  User is adding a new number?
         private bool isNewNumber = true;
@@ -24,11 +25,11 @@ namespace CalculatorApp
 
         #region --- Constructor ---
 
-        public Calculator()
+        public Calculator(ICalculator calculator)
         {
             InitializeComponent();
 
-            calculatorBAL = new CalculatorBAL();
+            this.calculator = calculator;   //  Assign the calculator instance to local variable instance
         }
 
         #endregion  --- Constructor ---
@@ -132,19 +133,19 @@ namespace CalculatorApp
             switch (operation)
             {
                 case "+":
-                    result = calculatorBAL.Add(previousNumber, double.Parse(txtBoxDisplayData.Text));
+                    result = calculator.Add(previousNumber, double.Parse(txtBoxDisplayData.Text));
                     break;
 
                 case "-":
-                    result = calculatorBAL.Subtract(previousNumber, double.Parse(txtBoxDisplayData.Text));
+                    result = calculator.Subtract(previousNumber, double.Parse(txtBoxDisplayData.Text));
                     break;
 
                 case "Å~":
-                    result = calculatorBAL.Multiply(previousNumber, double.Parse(txtBoxDisplayData.Text));
+                    result = calculator.Multiply(previousNumber, double.Parse(txtBoxDisplayData.Text));
                     break;
 
                 case "/":
-                    result = calculatorBAL.Divide(previousNumber, double.Parse(txtBoxDisplayData.Text));
+                    result = calculator.Divide(previousNumber, double.Parse(txtBoxDisplayData.Text));
                     break;
             }
 

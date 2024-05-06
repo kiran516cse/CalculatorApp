@@ -19,6 +19,7 @@ namespace CalculatorApp
             //  Setup dependency injection container
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<ICalculator, CalculatorBAL>() // Use CalculatorBAL for basic Calculator
+                                                            //  .AddSingleton<ICalculator, ScientificCalculatorBAL>() // Use ScientificCalculatorBAL for scientific Calculator
                 .BuildServiceProvider();
 
             //  Create an instance of the Calulator UI and pass the calculator implementation

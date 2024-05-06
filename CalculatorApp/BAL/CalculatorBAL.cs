@@ -4,12 +4,18 @@ namespace CalculatorApp.BAL
 {
     public class CalculatorBAL : ICalculator
     {
+        #region --- Constructor ---
+
         /// <summary>
         /// Constructor
         /// </summary>
         public CalculatorBAL()
         {
         }
+
+        #endregion  --- Constructor ---
+
+        #region --- API's ---
 
         /// <summary>
         /// Add functionality for Basic Calculator
@@ -62,5 +68,7 @@ namespace CalculatorApp.BAL
         {
             return x - y;
         }
+
+        #endregion  --- API's ---
     }
 }

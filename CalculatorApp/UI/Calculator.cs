@@ -187,7 +187,7 @@ namespace CalculatorApp
                     log.Debug("Calculation performed for subtraction.");
                     break;
 
-                case "Å~":
+                case "√ó":
                     result = calculator.Multiply(previousNumber, double.Parse(txtBoxDisplayData.Text));
                     log.Debug("Calculation performed for Multiplication.");
                     break;

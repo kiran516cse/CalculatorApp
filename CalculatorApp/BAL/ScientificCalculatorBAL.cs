@@ -1,4 +1,6 @@
 ﻿using CalculatorApp.Interfaces;
+using log4net;
+using log4net.Config;
 
 namespace CalculatorApp.BAL
 {
@@ -8,6 +10,13 @@ namespace CalculatorApp.BAL
     /// </summary>
     public class ScientificCalculatorBAL : ICalculator, IScientificCalculator
     {
+        #region --- Properties ---
+
+        //  Logging for Calculator application
+        private static readonly ILog log = LogManager.GetLogger(typeof(ScientificCalculatorBAL));
+
+        #endregion  --- Properties ---
+
         #region --- Constructor --- 
 
         /// <summary>
@@ -15,6 +24,8 @@ namespace CalculatorApp.BAL
         /// </summary>
         public ScientificCalculatorBAL()
         {
+            XmlConfigurator.Configure();
+            log.Info("ScientificCalculatorBAL class execution started.");
         }
 
         #endregion  --- Constructor --- 

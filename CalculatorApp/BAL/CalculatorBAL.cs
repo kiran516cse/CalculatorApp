@@ -1,9 +1,18 @@
 ﻿using CalculatorApp.Interfaces;
+using log4net;
+using log4net.Config;
 
 namespace CalculatorApp.BAL
 {
     public class CalculatorBAL : ICalculator
     {
+        #region --- Properties ---
+
+        //  Logging for Calculator application
+        private static readonly ILog log = LogManager.GetLogger(typeof(CalculatorBAL));
+
+        #endregion  --- Properties ---
+
         #region --- Constructor ---
 
         /// <summary>
@@ -11,6 +20,8 @@ namespace CalculatorApp.BAL
         /// </summary>
         public CalculatorBAL()
         {
+            XmlConfigurator.Configure();
+            log.Info("CalculatorBAL class execution started.");
         }
 
         #endregion  --- Constructor ---
@@ -43,6 +54,7 @@ namespace CalculatorApp.BAL
             else
             {
                 MessageBox.Show("Cannot divide by zero!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                log.Debug("CalculatorBAL class - Error - Cannot divide by zero!");
                 return 0;
             }
         }

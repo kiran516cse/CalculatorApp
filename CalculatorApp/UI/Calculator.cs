@@ -1,13 +1,24 @@
 using CalculatorApp.Interfaces;
+using log4net;
+using log4net.Config;
 
 namespace CalculatorApp
 {
+    /// <summary>
+    /// Calculator functionality is basically reqired for any kind of calculations.
+    /// So, I have designed the Calculator to extend further for other calculators like Scientific Calculator, etc.,
+    /// Also, Now I used an Dependency Injection where user can able to add the features as plugins / components and can able to initialize according to their needs.
+    /// However for example I had introduced an interface for Scientific Calculator to add in the Calculator but the UI is not designed for it.
+    /// </summary>
     public partial class Calculator : Form
     {
         #region --- Properties ---
 
         //  Define the calculator variable
         private readonly ICalculator calculator;
+
+        //  Logging for Calculator application
+        private static readonly ILog log = LogManager.GetLogger(typeof(Calculator));
 
         //  User is adding a new number?
         private bool isNewNumber = true;
@@ -25,8 +36,15 @@ namespace CalculatorApp
 
         #region --- Constructor ---
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="calculator"></param>
         public Calculator(ICalculator calculator)
         {
+            XmlConfigurator.Configure();
+            log.Info("Calculator application started.");
+
             InitializeComponent();
 
             this.calculator = calculator;   //  Assign the calculator instance to local variable instance
@@ -43,6 +61,8 @@ namespace CalculatorApp
         /// <param name="e"></param>
         private void OperationButton_Click(object sender, EventArgs e)
         {
+            log.Debug("Entered - User has clicked on the arithemetic operation button");
+
             Button button = (Button)sender;
             string buttonText = button.Text;
 
@@ -57,6 +77,8 @@ namespace CalculatorApp
                 operation = buttonText;
                 isNewNumber = true;
             }
+
+            log.Debug("Exited - User has clicked on the arithemetic operation button");
         }
 
         /// <summary>
@@ -66,6 +88,8 @@ namespace CalculatorApp
         /// <param name="e"></param>
         private void NumberButton_Click(object sender, EventArgs e)
         {
+            log.Debug("Entered - User has clicked on the number button");
+
             Button button = (Button)sender;
             string buttonText = button.Text;
 
@@ -99,6 +123,8 @@ namespace CalculatorApp
                     }
                 }
             }
+
+            log.Debug("Exited - User has clicked on the number button");
         }
 
         /// <summary>
@@ -108,11 +134,15 @@ namespace CalculatorApp
         /// <param name="e"></param>
         private void EqualsButton_Click(object sender, EventArgs e)
         {
+            log.Debug("Started to Calculate the calculations after clicking the Equals button");
+
             if (!isNewNumber)
             {
                 Calculate();
                 operation = string.Empty;
             }
+
+            log.Debug("Completed to Calculate the calculations after clicking the Equals button");
         }
 
         /// <summary>
@@ -122,10 +152,14 @@ namespace CalculatorApp
         /// <param name="e"></param>
         private void ClearButton_Click(object sender, EventArgs e)
         {
+            log.Debug("Clearing the calculator contents to default started");
+
             txtBoxDisplayData.Text = "0";
             isNewNumber = true;
             operation = string.Empty;
             previousNumber = 0;
+
+            log.Debug("Clearing the calculator contents to default completed");
         }
 
         #endregion  --- Button Click Events ---
@@ -138,28 +172,36 @@ namespace CalculatorApp
         /// </summary>
         private void Calculate()
         {
+            log.Debug("Calculation started.");
+
             double result = 0;
             switch (operation)
             {
                 case "+":
                     result = calculator.Add(previousNumber, double.Parse(txtBoxDisplayData.Text));
+                    log.Debug("Calculation performed for addition.");
                     break;
 
                 case "-":
                     result = calculator.Subtract(previousNumber, double.Parse(txtBoxDisplayData.Text));
+                    log.Debug("Calculation performed for subtraction.");
                     break;
 
                 case "Å~":
                     result = calculator.Multiply(previousNumber, double.Parse(txtBoxDisplayData.Text));
+                    log.Debug("Calculation performed for Multiplication.");
                     break;
 
                 case "/":
                     result = calculator.Divide(previousNumber, double.Parse(txtBoxDisplayData.Text));
+                    log.Debug("Calculation performed for Divison.");
                     break;
             }
 
             txtBoxDisplayData.Text = result.ToString();
             isNewNumber = true;
+
+            log.Debug("Calculation completed successfully.");
         }
 
         #endregion  --- Private API's ---

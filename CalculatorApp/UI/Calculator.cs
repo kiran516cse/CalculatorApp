@@ -115,8 +115,17 @@ namespace CalculatorApp
             }
         }
 
+        /// <summary>
+        /// Clears the text from the Display Text Box and makes other properties to default
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearButton_Click(object sender, EventArgs e)
         {
+            txtBoxDisplayData.Text = "0";
+            isNewNumber = true;
+            operation = string.Empty;
+            previousNumber = 0;
         }
 
         #endregion  --- Button Click Events ---
